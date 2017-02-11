@@ -24,15 +24,17 @@ Camera calibration is done by the script `calibrate_camera.py` located in the al
 ![Calibration of chessboard (9x6) images](images/camera_calibration.png)
 
 ### Apply a distortion correction and perspective transform
-Next, I used the camera calibration values (that were saved to the file calibrate_camera.p) to distort the raw lane lines images and at the same time I've warped them as well. The code for the distortion and the warping is included in the file `image_transformations.py` in seperate functions. The code for the other parts below are also added to the same file. 
+Next, I used the camera calibration values (that were saved to the file calibrate_camera.p) to distort the raw lane lines images and at the same time I've warped them as well. Warping the files are done by eyeballing the source points and the destination points.
+The code for the distortion and the warping is included in the file `image_transformations.py` in seperate functions. The code for the other parts below are also added to the same file. 
 ![Calibration of test image](images/undistorted_warped.png)
 
 ### Create color mask 
-To determine the lane lines I've used two parallel pipelines: a color mask and an sobel filter. The color mask is splitted in a yellow and a white mask. Both are applied to the warped image.
+To determine the lane lines I've used two parallel pipelines: a color mask and an sobel filter. The color mask is splitted in a yellow and a white mask. I've converted the image from RGB space to HSV space. The thresholds are chosen on emperical results.
+Both are applied to the warped image.
 ![Calibration of test image](images/color_mask.png)
 
 ### Add Sobel filter
-Next to the color mask I've used a Sobel filter on the x-direction and y-direction to detect lane lines.
+Next to the color mask I've used a Sobel filter on the x-direction and y-direction to detect lane lines.  I've converted the image from RGB space to HSL space, and threshold the S channel as well as the L channel. These thresholds are chosen on emperical results as well.
 ![Calibration of test image](images/sobel_filter.png)
 
 ### Combine color mask and sobel filter to create binary mask
@@ -44,7 +46,7 @@ To fit a curve to the lane lines, I first calculate a histogram of the bottom ha
 ![Use histogram of both half of the image](images/histogram.png)
 
 ### Use window to detect lane lines in steps
-Next I partition the image into 9 horizontal slices and devided the lines in left and right lanes. 
+Next I partition the image into 10 horizontal slices and devided the lines in left and right lanes. 
 ![Split the images in 10 parts and use steps to detect line pixels](images/window.png)
 
 ### Determine curve and position of car
@@ -60,6 +62,7 @@ After all the steps above, we are able to annotate the original image with the l
 
 ### Video pipeline 
 The complete video pipeline is implemented in the 'Process video' Notebook and the output of the project video can be found in the output directory (output/project_video_output.mp4).
+Step-by-step execution of all parts are visible in the notebook 'Video pipeline'.
 
 ### Discussion
 This alogrithm has problems identifying the lane lines in the challenge videos, because of the contrast and the fact that the lane lines are not as clearly visible as in the project video. Possible improvements:
