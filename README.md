@@ -59,7 +59,7 @@ After all the steps above, we are able to annotate the original image with the l
 ![Draw lines on original image](images/result.png)
 
 ### Video pipeline 
-The complete video pipeline is implemented in the 'Process video' Notebook and the output of the project video can be found in the output directory (project_video_output.mp4).
+The complete video pipeline is implemented in the 'Process video' Notebook and the output of the project video can be found in the output directory (output/project_video_output.mp4).
 
 ### Discussion
 This alogrithm has problems identifying the lane lines in the challenge videos, because of the contrast and the fact that the lane lines are not as clearly visible as in the project video. Possible improvements:
