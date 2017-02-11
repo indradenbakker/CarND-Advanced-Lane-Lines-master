@@ -24,7 +24,7 @@ Camera calibration is done by the script `calibrate_camera.py` located in the al
 ![Calibration of chessboard (9x6) images](images/camera_calibration.png)
 
 ### Apply a distortion correction and perspective transform
-Next, I used the camera calibration values (that were saved to the file calibrate_camera.p) to distort the raw lane lines images and at the same time I've warped them as well. The code for the distortion and the warping is included in the file `image_transformations.py` in seperate functions.
+Next, I used the camera calibration values (that were saved to the file calibrate_camera.p) to distort the raw lane lines images and at the same time I've warped them as well. The code for the distortion and the warping is included in the file `image_transformations.py` in seperate functions. The code for the other parts below are also added to the same file. 
 ![Calibration of test image](images/undistorted_warped.png)
 
 ### Create color mask 
@@ -40,20 +40,26 @@ After applying the color mask and the sobel filter in parallel I've combined bot
 ![Combine color mask and Sobel filter](images/color_sobel.png)
 
 ### Detect lane pixels 
+To fit a curve to the lane lines, I first calculate a histogram of the bottom half of the image. 
 ![Use histogram of both half of the image](images/histogram.png)
 
 ### Use window to detect lane lines in steps
+Next I partition the image into 9 horizontal slices and devided the lines in left and right lanes. 
 ![Split the images in 10 parts and use steps to detect line pixels](images/window.png)
 
 ### Determine curve and position of car
-To determine the curve of the lane lines I've followed the steps described in the lessons. The curve and relative position are displayed in the top left of each image (or frame). 
+To determine the curve of the lane lines I've followed the steps described in the lessons. With the polynomial fit for the left and right lane lines, I calculated the radius of curvature for each line according to formulas shared in the lessons. I also converted the distance units from pixels to meters, assuming 30 meters per 720 pixels in the vertical direction, and 3.7 meters per 700 pixels in the horizontal direction. For the final radius of curvature I took the average of both lines.
+
+Given the polynomial fit for the left and right lane lines, I calculated the vehicle's offset from the lane center. I assumed that the vehicle's center is the center of the image. I used the mean x value of the bottom x value of the left lane line, and bottom x value of the right lane line to determine the car's position. 
+
+The curve and relative position are displayed in the top left of each image (or frame). 
 
 #### Draw lines on original image (undistorted)
+After all the steps above, we are able to annotate the original image with the lane area and information about the lane curvature and vehicle offset.
 ![Draw lines on original image](images/result.png)
 
 ### Video pipeline 
 The complete video pipeline is implemented in the 'Process video' Notebook and the output of the project video can be found in the output directory (project_video_output.mp4).
-
 
 ### Discussion
 This alogrithm has problems identifying the lane lines in the challenge videos, because of the contrast and the fact that the lane lines are not as clearly visible as in the project video. Possible improvements:
