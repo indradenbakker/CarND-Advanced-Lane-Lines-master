@@ -61,7 +61,7 @@ After all the steps above, we are able to annotate the original image with the l
 ![Draw lines on original image](images/result.png)
 
 ### Video pipeline 
-The complete video pipeline is implemented in the 'Process video' Notebook and the output of the project video can be found in the output directory (output/project_video_output.mp4).
+The complete video pipeline is implemented in the 'Process video' Notebook and the output of the project video can be found in the main directory [project_video_output.mp4](https://github.com/indradenbakker/CarND-Advanced-Lane-Lines-master/blob/master/project_video_output.mp4).
 Step-by-step execution of all parts are visible in the notebook 'Video pipeline'.
 
 ### Discussion
